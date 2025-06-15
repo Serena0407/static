@@ -19,14 +19,14 @@ plt.rcParams['axes.unicode_minus'] = False  # 確保負號顯示正常
 try:
     df = pd.read_excel("processed_data.xlsx")
 except FileNotFoundError:
-    print("❌ 找不到 processed_data.xlsx，請確認檔案在 /Users/chenpeichi/Desktop/統計/")
+    print("找不到 processed_data.xlsx，請確認檔案在 /Users/chenpeichi/Desktop/統計/")
     exit()
 
 # 檢查欄位
 required_columns = ['檢傷級數', 'pH', '年齡', '呼吸次數', '意識程度E', '心跳', '血壓(SBP)', '血氧濃度(%)', 'Y']
 missing_columns = [col for col in required_columns if col not in df.columns]
 if missing_columns:
-    print(f"❌ 資料缺少欄位：{missing_columns}")
+    print(f"資料缺少欄位：{missing_columns}")
     exit()
 
 # 選擇重點欄位並移除缺失值
@@ -45,7 +45,7 @@ try:
     smote = SMOTE(random_state=42)
     X_resampled, y_resampled = smote.fit_resample(X_scaled, y)
 except ValueError as e:
-    print(f"❌ SMOTE 失敗：{e}，請檢查類別分佈或資料量")
+    print(f"SMOTE 失敗：{e}，請檢查類別分佈或資料量")
     exit()
 
 # 分割訓練與測試集
@@ -64,16 +64,16 @@ model.fit(X_train, y_train)
 
 # 預測與評估
 y_pred = model.predict(X_test)
-print("✅ 準確率：", accuracy_score(y_test, y_pred))
-print("📊 分類報告：\n", classification_report(y_test, y_pred))
+print("準確率：", accuracy_score(y_test, y_pred))
+print("分類報告：\n", classification_report(y_test, y_pred))
 
 # AUC 計算
 try:
     y_pred_proba = model.predict_proba(X_test)
     auc = roc_auc_score(pd.get_dummies(y_test), y_pred_proba, multi_class='ovr')
-    print("🔥 AUC：", auc)
+    print("AUC：", auc)
 except Exception as e:
-    print(f"❌ AUC 計算失敗：{e}")
+    print(f"AUC 計算失敗：{e}")
 
 # SHAP 特徵解釋
 try:
@@ -84,4 +84,4 @@ try:
     plt.tight_layout()
     plt.show()
 except Exception as e:
-    print(f"❌ SHAP 分析失敗：{e}")
+    print(f"SHAP 分析失敗：{e}")
