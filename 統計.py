@@ -8,12 +8,11 @@ from imblearn.over_sampling import SMOTE
 import shap
 import matplotlib.pyplot as plt
 
-# 設置中文字型（macOS 適配）
 try:
-    plt.rcParams['font.family'] = 'Arial Unicode MS'  # macOS 預設中文字型
+    plt.rcParams['font.family'] = 'Arial Unicode MS'
 except:
     print("⚠️ Arial Unicode MS 字型不可用，使用預設字型")
-plt.rcParams['axes.unicode_minus'] = False  # 確保負號顯示正常
+plt.rcParams['axes.unicode_minus'] = False
 
 # 讀取資料
 try:
